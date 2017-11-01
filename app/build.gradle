@@ -4,12 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion project.compileSdkVersion.toInteger()
     defaultConfig {
-        applicationId "com.rromer.exemple"
-        minSdkVersion 19
-        targetSdkVersion 26
+        vectorDrawables.useSupportLibrary = true
+        minSdkVersion project.minSdkVersion.toInteger()
+        targetSdkVersion project.targetSdkVersion.toInteger()
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -21,62 +20,57 @@ android {
         }
     }
 
-    kapt {
-        generateStubs = true
-    }
-
     dataBinding {
         enabled = true
-    }
-//https://proandroiddev.com/exploring-the-new-dagger-android-module-9eb6075f1a46
-    dependencies {
-        implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-        implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$project.kotlin_version"
-        // Dagger Core
-        provided "com.google.dagger:dagger:$project.dagger"
-        annotationProcessor "com.google.dagger:dagger-compiler:$project.dagger"
-        kapt "com.google.dagger:dagger-compiler:$project.dagger"
-        // Dagger Android
-        implementation "com.google.dagger:dagger-android:$project.dagger"
-        annotationProcessor "com.google.dagger:dagger-android-processor:$project.dagger"
-        kapt "com.google.dagger:dagger-android-processor:$project.dagger"
-
-        kapt "com.android.databinding:compiler:$project.androidPlugin"
-        implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-        implementation "com.jakewharton.timber:timber:$project.timber"
-
-        implementation "android.arch.lifecycle:extensions:$project.androidArch"
-       // implementation "com.trello.rxlifecycle2:rxlifecycle:$project.rxLifeCycleVersion"
-        //implementation "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:$project.rxLifeCycleVersion"
-
-        implementation "com.android.support:recyclerview-v7:$project.androidSupport"
-        implementation "com.android.support:cardview-v7:$project.androidSupport"
-        implementation "com.android.support:design:$project.androidSupport"
-        implementation "com.android.support:appcompat-v7:$project.androidSupport"
-        implementation "com.android.support:support-v4:$project.androidSupport"
-        implementation "com.android.support:design:$project.androidSupport"
-        implementation "com.android.support:support-annotations:$project.androidSupport"
-
-        implementation "io.reactivex.rxjava2:rxkotlin:$project.rxKotlin"
-        implementation "io.reactivex.rxjava2:rxjava:$project.rxJava"
-        implementation "io.reactivex.rxjava2:rxandroid:$project.rxAndroid"
-        implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
-
-        implementation "com.squareup.retrofit2:retrofit:$project.retrofit"
-        implementation "com.squareup.retrofit2:converter-gson:$project.retrofit"
-        implementation "com.google.code.gson:gson:$project.gson"
-
-        //https://medium.com/google-developers/room-rxjava-acb0cd4f3757
-        implementation "android.arch.persistence.room:runtime:$project.roomVersion"
-        implementation "android.arch.persistence.room:rxjava2:$project.roomVersion"
-        kapt "android.arch.persistence.room:compiler:$project.roomVersion"
-
-        testImplementation 'junit:junit:4.12'
-        androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
-            exclude group: 'com.android.support', module: 'support-annotations'
-        })
     }
 
 }
 
+kapt {
+    generateStubs = true
+}
+
+dependencies {
+    compile project(path: ':database')
+    compile project(path: ':network')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$project.kotlin_version"
+    // Dagger Core
+    provided "com.google.dagger:dagger:$project.dagger"
+    annotationProcessor "com.google.dagger:dagger-compiler:$project.dagger"
+    kapt "com.google.dagger:dagger-compiler:$project.dagger"
+    // Dagger Android
+    implementation "com.google.dagger:dagger-android:$project.dagger"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$project.dagger"
+    kapt "com.google.dagger:dagger-android-processor:$project.dagger"
+
+    kapt "com.android.databinding:compiler:$project.androidPlugin"
+    implementation "com.android.support.constraint:constraint-layout:$project.constraintLayout"
+    implementation "com.jakewharton.timber:timber:$project.timber"
+
+    implementation "android.arch.lifecycle:extensions:$project.androidArch"
+    //implementation "com.trello.rxlifecycle2:rxlifecycle:$project.rxLifeCycleVersion"
+    //implementation "com.trello.rxlifecycle2:rxlifecycle-android-lifecycle-kotlin:$project.rxLifeCycleVersion"
+
+    implementation "com.android.support:recyclerview-v7:$project.androidSupport"
+    implementation "com.android.support:cardview-v7:$project.androidSupport"
+    implementation "com.android.support:design:$project.androidSupport"
+    implementation "com.android.support:appcompat-v7:$project.androidSupport"
+    implementation "com.android.support:support-v4:$project.androidSupport"
+    implementation "com.android.support:support-annotations:$project.androidSupport"
+
+    implementation "io.reactivex.rxjava2:rxkotlin:$project.rxKotlin"
+    implementation "io.reactivex.rxjava2:rxjava:$project.rxJava"
+    implementation "io.reactivex.rxjava2:rxandroid:$project.rxAndroid"
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
+
+    implementation "android.arch.persistence.room:runtime:$project.androidArch"
+    implementation "android.arch.persistence.room:rxjava2:$project.androidArch"
+    kapt "android.arch.persistence.room:compiler:$project.androidArch"
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+}

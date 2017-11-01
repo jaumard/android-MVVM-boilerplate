@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion project.targetSdkVersion.toInteger()
+
+    defaultConfig {
+        minSdkVersion project.minSdkVersion.toInteger()
+        targetSdkVersion project.targetSdkVersion.toInteger()
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    kapt {
+        generateStubs = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    implementation "io.reactivex.rxjava2:rxkotlin:$project.rxKotlin"
+    implementation "io.reactivex.rxjava2:rxjava:$project.rxJava"
+    implementation "io.reactivex.rxjava2:rxandroid:$project.rxAndroid"
+
+    //https://medium.com/google-developers/room-rxjava-acb0cd4f3757
+    implementation "android.arch.persistence.room:runtime:$project.androidArch"
+    implementation "android.arch.persistence.room:rxjava2:$project.androidArch"
+    kapt "android.arch.persistence.room:compiler:$project.androidArch"
+
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}

@@ -8,14 +8,14 @@
 
         <variable
             name="viewModel"
-            type="com.rromer.exemple.ui.story.mainActivity.MainActivityViewModel" />
+            type="com.example.ui.story.mainActivity.MainActivityViewModel"/>
 
     </data>
 
     <android.support.constraint.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.rromer.exemple.ui.story.mainActivity.MainActivity">
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 tools:context=".ui.story.mainActivity.MainActivity">
 
         <TextView
             android:id="@+id/test"
